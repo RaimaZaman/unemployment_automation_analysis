@@ -1,0 +1,807 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/raimazaman/Desktop/ECO375 Phase 6/ECO375_Project_Phase6.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}29 Nov 2023, 03:43:25
+{txt}
+{com}. 
+. /*******************************************************************************
+> 
+> Class:           ECO375
+> Project:         Phase 6
+> Author:      Raima Zaman
+> 
+> Date:            22-11-2023
+> 
+> *******************************************************************************/
+. 
+. * Loading the dataset
+. use "/Users/raimazaman/Desktop/ECO375/STATA/ECO375_Phase6_Data.dta"
+{txt}
+{com}. 
+. *******************************************************************************/
+. 
+. * Creating descriptive summary table
+. summarize UER AU GDP I LIT LFPR RD
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 9}UER {c |}{res}        672    7.777597    4.120314        1.9     27.825
+{txt}{space 10}AU {c |}{res}        672    38.56742    13.05142   7.106392    65.3959
+{txt}{space 9}GDP {c |}{res}        672    2.110787    3.239593  -14.83861   24.37045
+{txt}{space 11}I {c |}{res}        672      2.6638    4.017853  -4.478103   54.91537
+{txt}{space 9}LIT {c |}{res}        672    98.03766    3.058396   48.13353        100
+{txt}{hline 13}{c +}{hline 57}
+{space 8}LFPR {c |}{res}        672    71.45862     6.28776     48.551      82.93
+{txt}{space 10}RD {c |}{res}        672     1.69909    .9496727     .13106    4.79571
+{txt}
+{com}. 
+. 
+. 
+. * Scatterplot overall UER on AU
+. scatter UER AU, title("Overall Association of Unemployment Rates and Automation Contribution Proportions") 
+{res}{txt}
+{com}. 
+. * Scatterplot UER on AU for Canada
+. scatter UER AU if Country_Code == "CAN", title("Association of Unemployment Rates and Automation Contribution Proportions in Canada")
+{res}{txt}
+{com}. 
+. * Scatterplot UER on Year for Canada
+. scatter UER Year if Country_Code == "CAN", title("Canadian Unemployment Rate Trends Over Time")
+{res}{txt}
+{com}. 
+. * Twoway Scatterplot for UER & GDP on Year for Canada
+. twoway (scatter UER Year if Country_Code == "CAN", mcolor(red) msymbol(circle)) (scatter GDP Year if Country_Code == "CAN", mcolor(blue) msymbol(circle)), title("Canadian Unemployment and GDP Growth Rate Trends Over Time")
+{res}{txt}
+{com}. 
+. * Creating descriptive summary table for Developed Countries
+. summarize UER AU GDP I LIT LFPR RD if Developed == 1
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 9}UER {c |}{res}        553    7.315193    3.868179        1.9     27.825
+{txt}{space 10}AU {c |}{res}        553    40.15943    13.00554   7.106392    65.3959
+{txt}{space 9}GDP {c |}{res}        553     1.75249    3.021968  -11.32544   24.37045
+{txt}{space 11}I {c |}{res}        553     1.87159    1.437853  -4.478103   8.911744
+{txt}{space 9}LIT {c |}{res}        553    98.57695    2.677778   48.13353        100
+{txt}{hline 13}{c +}{hline 57}
+{space 8}LFPR {c |}{res}        553    73.07511    4.905223     60.359      82.93
+{txt}{space 10}RD {c |}{res}        553    1.941074    .8617351     .34193    4.79571
+{txt}
+{com}. 
+. * Creating descriptive summary table for Developing Countries
+. summarize UER AU GDP I LIT LFPR RD if Developed == 0
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 9}UER {c |}{res}        119    9.926414     4.56996   2.505833      20.52
+{txt}{space 10}AU {c |}{res}        119    31.16929    10.50244   9.932498   56.52462
+{txt}{space 9}GDP {c |}{res}        119    3.775814    3.682527  -14.83861   11.20011
+{txt}{space 11}I {c |}{res}        119    6.345246    8.094233  -1.134309   54.91537
+{txt}{space 9}LIT {c |}{res}        119    95.53159    3.456855         87    99.8156
+{txt}{hline 13}{c +}{hline 57}
+{space 8}LFPR {c |}{res}        119     63.9467    6.565669     48.551     73.641
+{txt}{space 10}RD {c |}{res}        119    .5745766    .3240566     .13106    2.12519
+{txt}
+{com}. 
+. * Boxplot for UER across Developing Country classifications
+. graph hbox UER, over(Developed) title("Distribution of Unemployment Rates between Developed and Developing Countries") 
+{res}{txt}
+{com}. 
+. * Boxplot for AU across Developing Country classifications
+. graph hbox AU, over(Developed) title("Distribution of Automation Contribution Proportions between Developed and Developing Countries")
+{res}{txt}
+{com}. 
+. * Boxplot for GDP across Developing Country classifications
+. graph hbox GDP, over(Developed) title("Distribution of GDP Growth Rates between Developed and Developing Countries")
+{res}{txt}
+{com}. 
+. * Boxplot for I across Developing Country classifications
+. graph hbox I, over(Developed) title("Distribution of Inflation Rates between Developed and Developing Countries")
+{res}{txt}
+{com}. 
+. * Boxplot for LIT across Developing Country classifications
+. graph hbox LIT, over(Developed) title("Distribution of Literacy Rates between Developed and Developing Countries")
+{res}{txt}
+{com}. 
+. * Boxplot for LFPR across Developing Country classifications
+. graph hbox LFPR, over(Developed) title("Distribution of Labor Force Participation Rates between Developed and Developing Countries")
+{res}{txt}
+{com}. 
+. * Boxplot for RD across Developing Country classifications
+. graph hbox RD, over(Developed) title("Distribution of R&D Expenditure Rates between Developed and Developing Countries")
+{res}{txt}
+{com}. 
+. * Barplot for distribution of Developing Country classifications
+. graph bar (count), over(Developed) title("Distribution of Developed and Developing Countries")
+{res}{txt}
+{com}.  
+. ** 
+. 
+. * Diagnostic Plot 
+. 
+. * Run your regression model
+. regress UER AU 
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       672
+{txt}{hline 13}{c +}{hline 34}   F(1, 670)       = {res}    51.28
+{txt}       Model {c |} {res} 809.853128         1  809.853128   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 10581.7067       670  15.7935921   {txt}R-squared       ={res}    0.0711
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.0697
+{txt}       Total {c |} {res} 11391.5599       671  16.9769894   {txt}Root MSE        =   {res} 3.9741
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}         UER{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 10}AU {c |}{col 14}{res}{space 2}-.0841752{col 26}{space 2}  .011755{col 37}{space 1}   -7.16{col 46}{space 3}0.000{col 54}{space 4}-.1072562{col 67}{space 3}-.0610942
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 11.02402{col 26}{space 2} .4785777{col 37}{space 1}   23.03{col 46}{space 3}0.000{col 54}{space 4} 10.08433{col 67}{space 3} 11.96371
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. predict fittedvalues, xb
+{txt}
+{com}. 
+. * Obtain residuals
+. predict residual, residuals
+{txt}
+{com}. 
+. * Plot fitted values against residuals
+. twoway scatter residual fittedvalues, xtitle("Fitted Values") ytitle("Residuals") title("Diagnostic Plot: Fitted Values vs. Residuals") yline(0) xlabel(, grid) ylabel(, grid)
+{res}{txt}
+{com}. 
+. **
+. 
+. *** Generate dummy variables for countries and years
+. 
+. tabulate Country_Code, generate(Country_Dummy)
+
+{txt}Country_Cod {c |}
+          e {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+        AUS {c |}{res}         21        3.12        3.12
+{txt}        AUT {c |}{res}         21        3.12        6.25
+{txt}        BEL {c |}{res}         21        3.12        9.38
+{txt}        CAN {c |}{res}         21        3.12       12.50
+{txt}        CHL {c |}{res}         21        3.12       15.62
+{txt}        COL {c |}{res}         21        3.12       18.75
+{txt}        CZE {c |}{res}         21        3.12       21.88
+{txt}        DEU {c |}{res}         21        3.12       25.00
+{txt}        DNK {c |}{res}         21        3.12       28.12
+{txt}        ESP {c |}{res}         21        3.12       31.25
+{txt}        FIN {c |}{res}         21        3.12       34.38
+{txt}        FRA {c |}{res}         21        3.12       37.50
+{txt}        GBR {c |}{res}         21        3.12       40.62
+{txt}        GRC {c |}{res}         21        3.12       43.75
+{txt}        HUN {c |}{res}         21        3.12       46.88
+{txt}        IRL {c |}{res}         21        3.12       50.00
+{txt}        ITA {c |}{res}         21        3.12       53.12
+{txt}        JPN {c |}{res}         21        3.12       56.25
+{txt}        KOR {c |}{res}         21        3.12       59.38
+{txt}        LTU {c |}{res}         21        3.12       62.50
+{txt}        LUX {c |}{res}         21        3.12       65.62
+{txt}        MEX {c |}{res}         21        3.12       68.75
+{txt}        NLD {c |}{res}         21        3.12       71.88
+{txt}        NOR {c |}{res}         21        3.12       75.00
+{txt}        NZL {c |}{res}         21        3.12       78.12
+{txt}        POL {c |}{res}         21        3.12       81.25
+{txt}        PRT {c |}{res}         21        3.12       84.38
+{txt}        SVK {c |}{res}         21        3.12       87.50
+{txt}        SVN {c |}{res}         21        3.12       90.62
+{txt}        SWE {c |}{res}         21        3.12       93.75
+{txt}        TUR {c |}{res}         21        3.12       96.88
+{txt}        USA {c |}{res}         21        3.12      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        672      100.00
+{err}variable {bf}Country_Dummy1{sf} already defined
+{txt}{search r(110), local:r(110);}
+
+end of do-file
+
+{search r(110), local:r(110);}
+
+{com}. do "/var/folders/mb/23yxtqns4zx0xzw_0pkrs7kh0000gn/T//SD52919.000000"
+{txt}
+{com}. tabulate Year, generate(Year_Dummy)
+
+       {txt}Year {c |}
+(2000-2020) {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+       2000 {c |}{res}         32        4.76        4.76
+{txt}       2001 {c |}{res}         32        4.76        9.52
+{txt}       2002 {c |}{res}         32        4.76       14.29
+{txt}       2003 {c |}{res}         32        4.76       19.05
+{txt}       2004 {c |}{res}         32        4.76       23.81
+{txt}       2005 {c |}{res}         32        4.76       28.57
+{txt}       2006 {c |}{res}         32        4.76       33.33
+{txt}       2007 {c |}{res}         32        4.76       38.10
+{txt}       2008 {c |}{res}         32        4.76       42.86
+{txt}       2009 {c |}{res}         32        4.76       47.62
+{txt}       2010 {c |}{res}         32        4.76       52.38
+{txt}       2011 {c |}{res}         32        4.76       57.14
+{txt}       2012 {c |}{res}         32        4.76       61.90
+{txt}       2013 {c |}{res}         32        4.76       66.67
+{txt}       2014 {c |}{res}         32        4.76       71.43
+{txt}       2015 {c |}{res}         32        4.76       76.19
+{txt}       2016 {c |}{res}         32        4.76       80.95
+{txt}       2017 {c |}{res}         32        4.76       85.71
+{txt}       2018 {c |}{res}         32        4.76       90.48
+{txt}       2019 {c |}{res}         32        4.76       95.24
+{txt}       2020 {c |}{res}         32        4.76      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        672      100.00
+{err}variable {bf}Year_Dummy1{sf} already defined
+{txt}{search r(110), local:r(110);}
+
+end of do-file
+
+{search r(110), local:r(110);}
+
+{com}. do "/var/folders/mb/23yxtqns4zx0xzw_0pkrs7kh0000gn/T//SD52919.000000"
+{txt}
+{com}. *** Regressions
+. 
+. eststo regr1 : reg UER AU, robust    
+
+{txt}Linear regression                               Number of obs     = {res}       672
+                                                {txt}F(1, 670)         =  {res}    43.92
+                                                {txt}Prob > F          = {res}    0.0000
+                                                {txt}R-squared         = {res}    0.0711
+                                                {txt}Root MSE          =    {res} 3.9741
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}         UER{col 14}{c |} Coefficient{col 26}  std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 10}AU {c |}{col 14}{res}{space 2}-.0841752{col 26}{space 2} .0127009{col 37}{space 1}   -6.63{col 46}{space 3}0.000{col 54}{space 4}-.1091136{col 67}{space 3}-.0592368
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 11.02402{col 26}{space 2} .5759945{col 37}{space 1}   19.14{col 46}{space 3}0.000{col 54}{space 4} 9.893046{col 67}{space 3} 12.15499
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. quietly estadd local fixedY "No", replace
+{txt}
+{com}. quietly estadd local fixedC "No", replace
+{txt}
+{com}. quietly estadd local clusY "No", replace
+{txt}
+{com}. estadd scalar adj_r2 = e(r2) , replace
+
+{txt}added scalar:
+             e(adj_r2) =  {res}.07109238
+{txt}
+{com}. 
+. 
+. eststo regr2 : reg UER AU i.Year_Dummy*, robust    
+{txt}{p 0 6 2}note: {bf:1.Year_Dummy21} omitted because of collinearity.{p_end}
+
+Linear regression                               Number of obs     = {res}       672
+                                                {txt}F(21, 650)        =  {res}     4.07
+                                                {txt}Prob > F          = {res}    0.0000
+                                                {txt}R-squared         = {res}    0.1294
+                                                {txt}Root MSE          =    {res} 3.9061
+
+{txt}{hline 15}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 16}{c |}{col 28}    Robust
+{col 1}           UER{col 16}{c |} Coefficient{col 28}  std. err.{col 40}      t{col 48}   P>|t|{col 56}     [95% con{col 69}f. interval]
+{hline 15}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 12}AU {c |}{col 16}{res}{space 2}-.0854512{col 28}{space 2}  .012909{col 39}{space 1}   -6.62{col 48}{space 3}0.000{col 56}{space 4}-.1107996{col 69}{space 3}-.0601028
+{txt}{space 1}1.Year_Dummy1 {c |}{col 16}{res}{space 2}  .102985{col 28}{space 2} .9787254{col 39}{space 1}    0.11{col 48}{space 3}0.916{col 56}{space 4} -1.81886{col 69}{space 3}  2.02483
+{txt}{space 1}1.Year_Dummy2 {c |}{col 16}{res}{space 2}-.1206645{col 28}{space 2} .9629515{col 39}{space 1}   -0.13{col 48}{space 3}0.900{col 56}{space 4}-2.011536{col 69}{space 3} 1.770207
+{txt}{space 1}1.Year_Dummy3 {c |}{col 16}{res}{space 2} .0718039{col 28}{space 2} .9415711{col 39}{space 1}    0.08{col 48}{space 3}0.939{col 56}{space 4}-1.777084{col 69}{space 3} 1.920692
+{txt}{space 1}1.Year_Dummy4 {c |}{col 16}{res}{space 2} .2818404{col 28}{space 2} .8924898{col 39}{space 1}    0.32{col 48}{space 3}0.752{col 56}{space 4}-1.470671{col 69}{space 3} 2.034351
+{txt}{space 1}1.Year_Dummy5 {c |}{col 16}{res}{space 2} .3237845{col 28}{space 2} .8839657{col 39}{space 1}    0.37{col 48}{space 3}0.714{col 56}{space 4}-1.411989{col 69}{space 3} 2.059558
+{txt}{space 1}1.Year_Dummy6 {c |}{col 16}{res}{space 2}-.0821527{col 28}{space 2} .8462327{col 39}{space 1}   -0.10{col 48}{space 3}0.923{col 56}{space 4}-1.743832{col 69}{space 3} 1.579527
+{txt}{space 1}1.Year_Dummy7 {c |}{col 16}{res}{space 2}-.7236654{col 28}{space 2}   .78968{col 39}{space 1}   -0.92{col 48}{space 3}0.360{col 56}{space 4}-2.274297{col 69}{space 3} .8269663
+{txt}{space 1}1.Year_Dummy8 {c |}{col 16}{res}{space 2}-1.384993{col 28}{space 2} .7489661{col 39}{space 1}   -1.85{col 48}{space 3}0.065{col 56}{space 4}-2.855678{col 69}{space 3} .0856922
+{txt}{space 1}1.Year_Dummy9 {c |}{col 16}{res}{space 2}-1.307339{col 28}{space 2} .7331922{col 39}{space 1}   -1.78{col 48}{space 3}0.075{col 56}{space 4} -2.74705{col 69}{space 3} .1323721
+{txt}1.Year_Dummy10 {c |}{col 16}{res}{space 2} .7286643{col 28}{space 2} .8375945{col 39}{space 1}    0.87{col 48}{space 3}0.385{col 56}{space 4}-.9160534{col 69}{space 3} 2.373382
+{txt}1.Year_Dummy11 {c |}{col 16}{res}{space 2} 1.429516{col 28}{space 2} .9179154{col 39}{space 1}    1.56{col 48}{space 3}0.120{col 56}{space 4}-.3729209{col 69}{space 3} 3.231954
+{txt}1.Year_Dummy12 {c |}{col 16}{res}{space 2} 1.265354{col 28}{space 2} .9623741{col 39}{space 1}    1.31{col 48}{space 3}0.189{col 56}{space 4}-.6243831{col 69}{space 3} 3.155092
+{txt}1.Year_Dummy13 {c |}{col 16}{res}{space 2} 1.787595{col 28}{space 2} 1.081756{col 39}{space 1}    1.65{col 48}{space 3}0.099{col 56}{space 4}-.3365622{col 69}{space 3} 3.911753
+{txt}1.Year_Dummy14 {c |}{col 16}{res}{space 2} 2.015319{col 28}{space 2} 1.132123{col 39}{space 1}    1.78{col 48}{space 3}0.076{col 56}{space 4}-.2077415{col 69}{space 3} 4.238379
+{txt}1.Year_Dummy15 {c |}{col 16}{res}{space 2} 1.525023{col 28}{space 2} 1.067754{col 39}{space 1}    1.43{col 48}{space 3}0.154{col 56}{space 4}-.5716401{col 69}{space 3} 3.621686
+{txt}1.Year_Dummy16 {c |}{col 16}{res}{space 2} .9659588{col 28}{space 2} .9910972{col 39}{space 1}    0.97{col 48}{space 3}0.330{col 56}{space 4}-.9801798{col 69}{space 3} 2.912097
+{txt}1.Year_Dummy17 {c |}{col 16}{res}{space 2} .3322521{col 28}{space 2} .9426572{col 39}{space 1}    0.35{col 48}{space 3}0.725{col 56}{space 4}-1.518769{col 69}{space 3} 2.183273
+{txt}1.Year_Dummy18 {c |}{col 16}{res}{space 2}-.3385428{col 28}{space 2} .8862103{col 39}{space 1}   -0.38{col 48}{space 3}0.703{col 56}{space 4}-2.078723{col 69}{space 3} 1.401638
+{txt}1.Year_Dummy19 {c |}{col 16}{res}{space 2}-1.021239{col 28}{space 2} .8455925{col 39}{space 1}   -1.21{col 48}{space 3}0.228{col 56}{space 4}-2.681662{col 69}{space 3} .6391835
+{txt}1.Year_Dummy20 {c |}{col 16}{res}{space 2}-1.206054{col 28}{space 2} .8346231{col 39}{space 1}   -1.45{col 48}{space 3}0.149{col 56}{space 4}-2.844937{col 69}{space 3} .4328284
+{txt}1.Year_Dummy21 {c |}{col 16}{res}{space 2}        0{col 28}{txt}  (omitted)
+{space 9}_cons {c |}{col 16}{res}{space 2} 10.85202{col 28}{space 2} .8574559{col 39}{space 1}   12.66{col 48}{space 3}0.000{col 56}{space 4} 9.168299{col 69}{space 3} 12.53574
+{txt}{hline 15}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. quietly estadd local fixedY "Yes", replace
+{txt}
+{com}. quietly estadd local fixedC "No", replace
+{txt}
+{com}. quietly estadd local clusY "No", replace
+{txt}
+{com}. estadd scalar adj_r2 = e(r2) , replace
+
+{txt}added scalar:
+             e(adj_r2) =  {res}.12938901
+{txt}
+{com}. 
+. 
+. eststo regr3 : reg UER AU i.Country_Dummy*, robust   
+{txt}{p 0 6 2}note: {bf:1.Country_Dummy32} omitted because of collinearity.{p_end}
+
+Linear regression                               Number of obs     = {res}       672
+                                                {txt}F(32, 639)        =  {res}    78.58
+                                                {txt}Prob > F          = {res}    0.0000
+                                                {txt}R-squared         = {res}    0.5933
+                                                {txt}Root MSE          =    {res} 2.6926
+
+{txt}{hline 18}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 19}{c |}{col 31}    Robust
+{col 1}              UER{col 19}{c |} Coefficient{col 31}  std. err.{col 43}      t{col 51}   P>|t|{col 59}     [95% con{col 72}f. interval]
+{hline 18}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 15}AU {c |}{col 19}{res}{space 2}-.0258499{col 31}{space 2} .0279381{col 42}{space 1}   -0.93{col 51}{space 3}0.355{col 59}{space 4}-.0807114{col 72}{space 3} .0290116
+{txt}{space 1}1.Country_Dummy1 {c |}{col 19}{res}{space 2}-1.007654{col 31}{space 2} .7468448{col 42}{space 1}   -1.35{col 51}{space 3}0.178{col 59}{space 4}-2.474221{col 72}{space 3} .4589123
+{txt}{space 1}1.Country_Dummy2 {c |}{col 19}{res}{space 2}-.7893177{col 31}{space 2} .4535995{col 42}{space 1}   -1.74{col 51}{space 3}0.082{col 59}{space 4}-1.680044{col 72}{space 3} .1014081
+{txt}{space 1}1.Country_Dummy3 {c |}{col 19}{res}{space 2} 1.461946{col 31}{space 2} .4588205{col 42}{space 1}    3.19{col 51}{space 3}0.002{col 59}{space 4} .5609675{col 72}{space 3} 2.362924
+{txt}{space 1}1.Country_Dummy4 {c |}{col 19}{res}{space 2} .8819993{col 31}{space 2} .5309838{col 42}{space 1}    1.66{col 51}{space 3}0.097{col 59}{space 4}-.1606847{col 72}{space 3} 1.924683
+{txt}{space 1}1.Country_Dummy5 {c |}{col 19}{res}{space 2}  1.39773{col 31}{space 2} .9724456{col 42}{space 1}    1.44{col 51}{space 3}0.151{col 59}{space 4} -.511845{col 72}{space 3} 3.307305
+{txt}{space 1}1.Country_Dummy6 {c |}{col 19}{res}{space 2} 5.373419{col 31}{space 2} 1.051074{col 42}{space 1}    5.11{col 51}{space 3}0.000{col 59}{space 4} 3.309442{col 72}{space 3} 7.437396
+{txt}{space 1}1.Country_Dummy7 {c |}{col 19}{res}{space 2}-.1035446{col 31}{space 2}  .603156{col 42}{space 1}   -0.17{col 51}{space 3}0.864{col 59}{space 4}-1.287952{col 72}{space 3} 1.080863
+{txt}{space 1}1.Country_Dummy8 {c |}{col 19}{res}{space 2} .8694865{col 31}{space 2} .7501393{col 42}{space 1}    1.16{col 51}{space 3}0.247{col 59}{space 4}-.6035496{col 72}{space 3} 2.342523
+{txt}{space 1}1.Country_Dummy9 {c |}{col 19}{res}{space 2}-.3416345{col 31}{space 2} .5066044{col 42}{space 1}   -0.67{col 51}{space 3}0.500{col 59}{space 4}-1.336445{col 72}{space 3} .6531761
+{txt}1.Country_Dummy10 {c |}{col 19}{res}{space 2} 9.485976{col 31}{space 2} 1.368328{col 42}{space 1}    6.93{col 51}{space 3}0.000{col 59}{space 4} 6.799013{col 72}{space 3} 12.17294
+{txt}1.Country_Dummy11 {c |}{col 19}{res}{space 2} 2.175839{col 31}{space 2} .4682281{col 42}{space 1}    4.65{col 51}{space 3}0.000{col 59}{space 4} 1.256387{col 72}{space 3} 3.095291
+{txt}1.Country_Dummy12 {c |}{col 19}{res}{space 2} 3.080147{col 31}{space 2}  .436298{col 42}{space 1}    7.06{col 51}{space 3}0.000{col 59}{space 4} 2.223396{col 72}{space 3} 3.936898
+{txt}1.Country_Dummy13 {c |}{col 19}{res}{space 2}-.4179564{col 31}{space 2}  .515548{col 42}{space 1}   -0.81{col 51}{space 3}0.418{col 59}{space 4}-1.430329{col 72}{space 3} .5944166
+{txt}1.Country_Dummy14 {c |}{col 19}{res}{space 2} 9.173533{col 31}{space 2} 1.781929{col 42}{space 1}    5.15{col 51}{space 3}0.000{col 59}{space 4} 5.674389{col 72}{space 3} 12.67268
+{txt}1.Country_Dummy15 {c |}{col 19}{res}{space 2} 1.029859{col 31}{space 2} .6676091{col 42}{space 1}    1.54{col 51}{space 3}0.123{col 59}{space 4}-.2811142{col 72}{space 3} 2.340832
+{txt}1.Country_Dummy16 {c |}{col 19}{res}{space 2}  2.38314{col 31}{space 2} 1.005112{col 42}{space 1}    2.37{col 51}{space 3}0.018{col 59}{space 4} .4094185{col 72}{space 3} 4.356861
+{txt}1.Country_Dummy17 {c |}{col 19}{res}{space 2} 3.208181{col 31}{space 2} .6362144{col 42}{space 1}    5.04{col 51}{space 3}0.000{col 59}{space 4} 1.958858{col 72}{space 3} 4.457505
+{txt}1.Country_Dummy18 {c |}{col 19}{res}{space 2}-1.754033{col 31}{space 2} .4814502{col 42}{space 1}   -3.64{col 51}{space 3}0.000{col 59}{space 4}-2.699448{col 72}{space 3} -.808617
+{txt}1.Country_Dummy19 {c |}{col 19}{res}{space 2}-2.120379{col 31}{space 2} .4899884{col 42}{space 1}   -4.33{col 51}{space 3}0.000{col 59}{space 4}-3.082561{col 72}{space 3}-1.158197
+{txt}1.Country_Dummy20 {c |}{col 19}{res}{space 2}  3.94806{col 31}{space 2} 1.246629{col 42}{space 1}    3.17{col 51}{space 3}0.002{col 59}{space 4} 1.500075{col 72}{space 3} 6.396044
+{txt}1.Country_Dummy21 {c |}{col 19}{res}{space 2}-1.945249{col 31}{space 2} 1.011656{col 42}{space 1}   -1.92{col 51}{space 3}0.055{col 59}{space 4} -3.93182{col 72}{space 3} .0413228
+{txt}1.Country_Dummy22 {c |}{col 19}{res}{space 2}-2.145409{col 31}{space 2} .4768167{col 42}{space 1}   -4.50{col 51}{space 3}0.000{col 59}{space 4}-3.081726{col 72}{space 3}-1.209092
+{txt}1.Country_Dummy23 {c |}{col 19}{res}{space 2}-.2682551{col 31}{space 2} .5285422{col 42}{space 1}   -0.51{col 51}{space 3}0.612{col 59}{space 4}-1.306145{col 72}{space 3} .7696345
+{txt}1.Country_Dummy24 {c |}{col 19}{res}{space 2}-2.514662{col 31}{space 2} .6140228{col 42}{space 1}   -4.10{col 51}{space 3}0.000{col 59}{space 4}-3.720408{col 72}{space 3}-1.308916
+{txt}1.Country_Dummy25 {c |}{col 19}{res}{space 2}-1.745593{col 31}{space 2}  .946777{col 42}{space 1}   -1.84{col 51}{space 3}0.066{col 59}{space 4}-3.604763{col 72}{space 3} .1135771
+{txt}1.Country_Dummy26 {c |}{col 19}{res}{space 2} 4.533506{col 31}{space 2} 1.262098{col 42}{space 1}    3.59{col 51}{space 3}0.000{col 59}{space 4} 2.055145{col 72}{space 3} 7.011866
+{txt}1.Country_Dummy27 {c |}{col 19}{res}{space 2} 3.456101{col 31}{space 2}  1.08995{col 42}{space 1}    3.17{col 51}{space 3}0.002{col 59}{space 4} 1.315785{col 72}{space 3} 5.596417
+{txt}1.Country_Dummy28 {c |}{col 19}{res}{space 2} 6.923377{col 31}{space 2} .9928231{col 42}{space 1}    6.97{col 51}{space 3}0.000{col 59}{space 4} 4.973787{col 72}{space 3} 8.872967
+{txt}1.Country_Dummy29 {c |}{col 19}{res}{space 2} .6343156{col 31}{space 2} .5818112{col 42}{space 1}    1.09{col 51}{space 3}0.276{col 59}{space 4}-.5081774{col 72}{space 3} 1.776809
+{txt}1.Country_Dummy30 {c |}{col 19}{res}{space 2} 1.316075{col 31}{space 2} .4517535{col 42}{space 1}    2.91{col 51}{space 3}0.004{col 59}{space 4} .4289738{col 72}{space 3} 2.203175
+{txt}1.Country_Dummy31 {c |}{col 19}{res}{space 2} 3.807303{col 31}{space 2} .7504205{col 42}{space 1}    5.07{col 51}{space 3}0.000{col 59}{space 4} 2.333714{col 72}{space 3} 5.280891
+{txt}1.Country_Dummy32 {c |}{col 19}{res}{space 2}        0{col 31}{txt}  (omitted)
+{space 12}_cons {c |}{col 19}{res}{space 2} 7.212489{col 31}{space 2} 1.394874{col 42}{space 1}    5.17{col 51}{space 3}0.000{col 59}{space 4} 4.473399{col 72}{space 3} 9.951579
+{txt}{hline 18}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. quietly estadd local fixedY "No", replace
+{txt}
+{com}. quietly estadd local fixedC "Yes", replace
+{txt}
+{com}. quietly estadd local clusY "No", replace
+{txt}
+{com}. estadd scalar adj_r2 = e(r2) , replace
+
+{txt}added scalar:
+             e(adj_r2) =  {res}.59331505
+{txt}
+{com}. 
+. 
+. eststo regr4 : reg UER AU i.Country_Dummy* i.Year_Dummy*, robust   
+{txt}{p 0 6 2}note: {bf:1.Country_Dummy32} omitted because of collinearity.{p_end}
+{p 0 6 2}note: {bf:1.Year_Dummy21} omitted because of collinearity.{p_end}
+
+Linear regression                               Number of obs     = {res}       672
+                                                {txt}F(52, 619)        =  {res}    32.45
+                                                {txt}Prob > F          = {res}    0.0000
+                                                {txt}R-squared         = {res}    0.6508
+                                                {txt}Root MSE          =    {res} 2.5352
+
+{txt}{hline 18}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 19}{c |}{col 31}    Robust
+{col 1}              UER{col 19}{c |} Coefficient{col 31}  std. err.{col 43}      t{col 51}   P>|t|{col 59}     [95% con{col 72}f. interval]
+{hline 18}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 15}AU {c |}{col 19}{res}{space 2}-.0289791{col 31}{space 2} .0286545{col 42}{space 1}   -1.01{col 51}{space 3}0.312{col 59}{space 4}-.0852509{col 72}{space 3} .0272928
+{txt}{space 1}1.Country_Dummy1 {c |}{col 19}{res}{space 2}-1.075243{col 31}{space 2}  .732215{col 42}{space 1}   -1.47{col 51}{space 3}0.142{col 59}{space 4} -2.51317{col 72}{space 3} .3626837
+{txt}{space 1}1.Country_Dummy2 {c |}{col 19}{res}{space 2}-.8034923{col 31}{space 2} .4177246{col 42}{space 1}   -1.92{col 51}{space 3}0.055{col 59}{space 4}-1.623822{col 72}{space 3} .0168369
+{txt}{space 1}1.Country_Dummy3 {c |}{col 19}{res}{space 2} 1.455129{col 31}{space 2} .3668214{col 42}{space 1}    3.97{col 51}{space 3}0.000{col 59}{space 4} .7347641{col 72}{space 3} 2.175495
+{txt}{space 1}1.Country_Dummy4 {c |}{col 19}{res}{space 2} .8509504{col 31}{space 2} .4652047{col 42}{space 1}    1.83{col 51}{space 3}0.068{col 59}{space 4}-.0626204{col 72}{space 3} 1.764521
+{txt}{space 1}1.Country_Dummy5 {c |}{col 19}{res}{space 2} 1.310168{col 31}{space 2} .9606505{col 42}{space 1}    1.36{col 51}{space 3}0.173{col 59}{space 4}-.5763609{col 72}{space 3} 3.196697
+{txt}{space 1}1.Country_Dummy6 {c |}{col 19}{res}{space 2} 5.293103{col 31}{space 2} 1.073664{col 42}{space 1}    4.93{col 51}{space 3}0.000{col 59}{space 4} 3.184637{col 72}{space 3} 7.401569
+{txt}{space 1}1.Country_Dummy7 {c |}{col 19}{res}{space 2} -.109594{col 31}{space 2} .4881598{col 42}{space 1}   -0.22{col 51}{space 3}0.822{col 59}{space 4}-1.068244{col 72}{space 3} .8490562
+{txt}{space 1}1.Country_Dummy8 {c |}{col 19}{res}{space 2} .9033573{col 31}{space 2} .7572146{col 42}{space 1}    1.19{col 51}{space 3}0.233{col 59}{space 4}-.5836637{col 72}{space 3} 2.390378
+{txt}{space 1}1.Country_Dummy9 {c |}{col 19}{res}{space 2}-.3408139{col 31}{space 2} .3613862{col 42}{space 1}   -0.94{col 51}{space 3}0.346{col 59}{space 4}-1.050506{col 72}{space 3} .3688777
+{txt}1.Country_Dummy10 {c |}{col 19}{res}{space 2} 9.445945{col 31}{space 2} 1.220817{col 42}{space 1}    7.74{col 51}{space 3}0.000{col 59}{space 4} 7.048499{col 72}{space 3} 11.84339
+{txt}1.Country_Dummy11 {c |}{col 19}{res}{space 2} 2.161193{col 31}{space 2} .3950756{col 42}{space 1}    5.47{col 51}{space 3}0.000{col 59}{space 4} 1.385342{col 72}{space 3} 2.937044
+{txt}1.Country_Dummy12 {c |}{col 19}{res}{space 2} 3.077744{col 31}{space 2} .3457713{col 42}{space 1}    8.90{col 51}{space 3}0.000{col 59}{space 4} 2.398717{col 72}{space 3} 3.756771
+{txt}1.Country_Dummy13 {c |}{col 19}{res}{space 2}-.4314666{col 31}{space 2} .3847117{col 42}{space 1}   -1.12{col 51}{space 3}0.262{col 59}{space 4}-1.186965{col 72}{space 3} .3240317
+{txt}1.Country_Dummy14 {c |}{col 19}{res}{space 2} 9.084248{col 31}{space 2} 1.686715{col 42}{space 1}    5.39{col 51}{space 3}0.000{col 59}{space 4} 5.771871{col 72}{space 3} 12.39662
+{txt}1.Country_Dummy15 {c |}{col 19}{res}{space 2}  1.04774{col 31}{space 2} .5342009{col 42}{space 1}    1.96{col 51}{space 3}0.050{col 59}{space 4}-.0013256{col 72}{space 3} 2.096806
+{txt}1.Country_Dummy16 {c |}{col 19}{res}{space 2} 2.418855{col 31}{space 2} .8206738{col 42}{space 1}    2.95{col 51}{space 3}0.003{col 59}{space 4} .8072131{col 72}{space 3} 4.030498
+{txt}1.Country_Dummy17 {c |}{col 19}{res}{space 2} 3.183088{col 31}{space 2} .5538884{col 42}{space 1}    5.75{col 51}{space 3}0.000{col 59}{space 4}  2.09536{col 72}{space 3} 4.270816
+{txt}1.Country_Dummy18 {c |}{col 19}{res}{space 2}-1.731896{col 31}{space 2}  .423022{col 42}{space 1}   -4.09{col 51}{space 3}0.000{col 59}{space 4}-2.562628{col 72}{space 3}-.9011635
+{txt}1.Country_Dummy19 {c |}{col 19}{res}{space 2}-2.088356{col 31}{space 2} .4784221{col 42}{space 1}   -4.37{col 51}{space 3}0.000{col 59}{space 4}-3.027883{col 72}{space 3}-1.148828
+{txt}1.Country_Dummy20 {c |}{col 19}{res}{space 2} 3.863713{col 31}{space 2} 1.153622{col 42}{space 1}    3.35{col 51}{space 3}0.001{col 59}{space 4} 1.598226{col 72}{space 3}   6.1292
+{txt}1.Country_Dummy21 {c |}{col 19}{res}{space 2}-2.041035{col 31}{space 2} 1.009995{col 42}{space 1}   -2.02{col 51}{space 3}0.044{col 59}{space 4}-4.024466{col 72}{space 3}-.0576033
+{txt}1.Country_Dummy22 {c |}{col 19}{res}{space 2}-2.165567{col 31}{space 2}   .40171{col 42}{space 1}   -5.39{col 51}{space 3}0.000{col 59}{space 4}-2.954446{col 72}{space 3}-1.376687
+{txt}1.Country_Dummy23 {c |}{col 19}{res}{space 2}-.2794477{col 31}{space 2} .4241943{col 42}{space 1}   -0.66{col 51}{space 3}0.510{col 59}{space 4}-1.112482{col 72}{space 3} .5535867
+{txt}1.Country_Dummy24 {c |}{col 19}{res}{space 2}-2.563272{col 31}{space 2} .5988276{col 42}{space 1}   -4.28{col 51}{space 3}0.000{col 59}{space 4}-3.739252{col 72}{space 3}-1.387292
+{txt}1.Country_Dummy25 {c |}{col 19}{res}{space 2}-1.838251{col 31}{space 2} .9186662{col 42}{space 1}   -2.00{col 51}{space 3}0.046{col 59}{space 4}-3.642331{col 72}{space 3}-.0341704
+{txt}1.Country_Dummy26 {c |}{col 19}{res}{space 2} 4.484289{col 31}{space 2} 1.217894{col 42}{space 1}    3.68{col 51}{space 3}0.000{col 59}{space 4} 2.092585{col 72}{space 3} 6.875994
+{txt}1.Country_Dummy27 {c |}{col 19}{res}{space 2} 3.383728{col 31}{space 2} .9750793{col 42}{space 1}    3.47{col 51}{space 3}0.001{col 59}{space 4} 1.468863{col 72}{space 3} 5.298592
+{txt}1.Country_Dummy28 {c |}{col 19}{res}{space 2} 6.911171{col 31}{space 2} .8861464{col 42}{space 1}    7.80{col 51}{space 3}0.000{col 59}{space 4} 5.170954{col 72}{space 3} 8.651389
+{txt}1.Country_Dummy29 {c |}{col 19}{res}{space 2} .6162287{col 31}{space 2}  .408907{col 42}{space 1}    1.51{col 51}{space 3}0.132{col 59}{space 4}-.1867844{col 72}{space 3} 1.419242
+{txt}1.Country_Dummy30 {c |}{col 19}{res}{space 2} 1.322056{col 31}{space 2} .3651782{col 42}{space 1}    3.62{col 51}{space 3}0.000{col 59}{space 4} .6049172{col 72}{space 3} 2.039194
+{txt}1.Country_Dummy31 {c |}{col 19}{res}{space 2} 3.753358{col 31}{space 2} .7793175{col 42}{space 1}    4.82{col 51}{space 3}0.000{col 59}{space 4} 2.222931{col 72}{space 3} 5.283784
+{txt}1.Country_Dummy32 {c |}{col 19}{res}{space 2}        0{col 31}{txt}  (omitted)
+{space 4}1.Year_Dummy1 {c |}{col 19}{res}{space 2} .4292006{col 31}{space 2} .7396154{col 42}{space 1}    0.58{col 51}{space 3}0.562{col 59}{space 4}-1.023259{col 72}{space 3}  1.88166
+{txt}{space 4}1.Year_Dummy2 {c |}{col 19}{res}{space 2} .2263596{col 31}{space 2} .7340393{col 42}{space 1}    0.31{col 51}{space 3}0.758{col 59}{space 4} -1.21515{col 72}{space 3} 1.667869
+{txt}{space 4}1.Year_Dummy3 {c |}{col 19}{res}{space 2} .4056501{col 31}{space 2} .6952913{col 42}{space 1}    0.58{col 51}{space 3}0.560{col 59}{space 4}-.9597656{col 72}{space 3} 1.771066
+{txt}{space 4}1.Year_Dummy4 {c |}{col 19}{res}{space 2} .5731607{col 31}{space 2} .6572901{col 42}{space 1}    0.87{col 51}{space 3}0.384{col 59}{space 4}-.7176282{col 72}{space 3}  1.86395
+{txt}{space 4}1.Year_Dummy5 {c |}{col 19}{res}{space 2} .6367951{col 31}{space 2}  .653755{col 42}{space 1}    0.97{col 51}{space 3}0.330{col 59}{space 4}-.6470515{col 72}{space 3} 1.920642
+{txt}{space 4}1.Year_Dummy6 {c |}{col 19}{res}{space 2} .2513982{col 31}{space 2} .6567181{col 42}{space 1}    0.38{col 51}{space 3}0.702{col 59}{space 4}-1.038267{col 72}{space 3} 1.541064
+{txt}{space 4}1.Year_Dummy7 {c |}{col 19}{res}{space 2}-.4241409{col 31}{space 2} .6329639{col 42}{space 1}   -0.67{col 51}{space 3}0.503{col 59}{space 4}-1.667158{col 72}{space 3} .8188759
+{txt}{space 4}1.Year_Dummy8 {c |}{col 19}{res}{space 2}-1.096148{col 31}{space 2} .6118471{col 42}{space 1}   -1.79{col 51}{space 3}0.074{col 59}{space 4}-2.297695{col 72}{space 3}    .1054
+{txt}{space 4}1.Year_Dummy9 {c |}{col 19}{res}{space 2}-1.035997{col 31}{space 2} .5901614{col 42}{space 1}   -1.76{col 51}{space 3}0.080{col 59}{space 4}-2.194958{col 72}{space 3} .1229644
+{txt}{space 3}1.Year_Dummy10 {c |}{col 19}{res}{space 2} 1.021589{col 31}{space 2} .6055556{col 42}{space 1}    1.69{col 51}{space 3}0.092{col 59}{space 4}-.1676038{col 72}{space 3} 2.210781
+{txt}{space 3}1.Year_Dummy11 {c |}{col 19}{res}{space 2} 1.651621{col 31}{space 2} .6108186{col 42}{space 1}    2.70{col 51}{space 3}0.007{col 59}{space 4} .4520929{col 72}{space 3} 2.851149
+{txt}{space 3}1.Year_Dummy12 {c |}{col 19}{res}{space 2} 1.492234{col 31}{space 2} .6152883{col 42}{space 1}    2.43{col 51}{space 3}0.016{col 59}{space 4} .2839289{col 72}{space 3}  2.70054
+{txt}{space 3}1.Year_Dummy13 {c |}{col 19}{res}{space 2} 1.955621{col 31}{space 2} .6940413{col 42}{space 1}    2.82{col 51}{space 3}0.005{col 59}{space 4} .5926602{col 72}{space 3} 3.318582
+{txt}{space 3}1.Year_Dummy14 {c |}{col 19}{res}{space 2} 2.154823{col 31}{space 2} .7413073{col 42}{space 1}    2.91{col 51}{space 3}0.004{col 59}{space 4} .6990406{col 72}{space 3} 3.610605
+{txt}{space 3}1.Year_Dummy15 {c |}{col 19}{res}{space 2} 1.663934{col 31}{space 2} .6864924{col 42}{space 1}    2.42{col 51}{space 3}0.016{col 59}{space 4} .3157978{col 72}{space 3} 3.012071
+{txt}{space 3}1.Year_Dummy16 {c |}{col 19}{res}{space 2} 1.101201{col 31}{space 2} .6391494{col 42}{space 1}    1.72{col 51}{space 3}0.085{col 59}{space 4}-.1539631{col 72}{space 3} 2.356365
+{txt}{space 3}1.Year_Dummy17 {c |}{col 19}{res}{space 2} .4905996{col 31}{space 2} .6261388{col 42}{space 1}    0.78{col 51}{space 3}0.434{col 59}{space 4}-.7390141{col 72}{space 3} 1.720213
+{txt}{space 3}1.Year_Dummy18 {c |}{col 19}{res}{space 2} -.224681{col 31}{space 2} .6046888{col 42}{space 1}   -0.37{col 51}{space 3}0.710{col 59}{space 4}-1.412171{col 72}{space 3} .9628091
+{txt}{space 3}1.Year_Dummy19 {c |}{col 19}{res}{space 2}-.9136619{col 31}{space 2} .6048698{col 42}{space 1}   -1.51{col 51}{space 3}0.131{col 59}{space 4}-2.101507{col 72}{space 3} .2741836
+{txt}{space 3}1.Year_Dummy20 {c |}{col 19}{res}{space 2}-1.131392{col 31}{space 2} .6218233{col 42}{space 1}   -1.82{col 51}{space 3}0.069{col 59}{space 4}-2.352531{col 72}{space 3} .0897466
+{txt}{space 3}1.Year_Dummy21 {c |}{col 19}{res}{space 2}        0{col 31}{txt}  (omitted)
+{space 12}_cons {c |}{col 19}{res}{space 2} 6.921508{col 31}{space 2}  1.57996{col 42}{space 1}    4.38{col 51}{space 3}0.000{col 59}{space 4} 3.818777{col 72}{space 3} 10.02424
+{txt}{hline 18}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. quietly estadd local fixedY "Yes", replace
+{txt}
+{com}. quietly estadd local fixedC "Yes", replace
+{txt}
+{com}. quietly estadd local clusY "No", replace
+{txt}
+{com}. estadd scalar adj_r2 = e(r2) , replace
+
+{txt}added scalar:
+             e(adj_r2) =  {res}.65075325
+{txt}
+{com}. 
+. 
+. eststo regr5 : reg UER AU i.Country_Dummy* i.Year_Dummy*, cluster(Year)   
+{txt}{p 0 6 2}note: {bf:1.Country_Dummy32} omitted because of collinearity.{p_end}
+{p 0 6 2}note: {bf:1.Year_Dummy21} omitted because of collinearity.{p_end}
+
+Linear regression                               Number of obs     = {res}       672
+                                                {txt}{help j_robustsingular:F(19, 20) }        =  {res}        .
+                                                {txt}Prob > F          = {res}         .
+                                                {txt}R-squared         = {res}    0.6508
+                                                {txt}Root MSE          =    {res} 2.5352
+
+{txt}{ralign 83:(Std. err. adjusted for {res:21} clusters in {res:Year})}
+{hline 18}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 19}{c |}{col 31}    Robust
+{col 1}              UER{col 19}{c |} Coefficient{col 31}  std. err.{col 43}      t{col 51}   P>|t|{col 59}     [95% con{col 72}f. interval]
+{hline 18}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 15}AU {c |}{col 19}{res}{space 2}-.0289791{col 31}{space 2} .0321588{col 42}{space 1}   -0.90{col 51}{space 3}0.378{col 59}{space 4}-.0960612{col 72}{space 3}  .038103
+{txt}{space 1}1.Country_Dummy1 {c |}{col 19}{res}{space 2}-1.075243{col 31}{space 2} .5973382{col 42}{space 1}   -1.80{col 51}{space 3}0.087{col 59}{space 4}-2.321268{col 72}{space 3} .1707826
+{txt}{space 1}1.Country_Dummy2 {c |}{col 19}{res}{space 2}-.8034923{col 31}{space 2} .4295572{col 42}{space 1}   -1.87{col 51}{space 3}0.076{col 59}{space 4}-1.699533{col 72}{space 3} .0925482
+{txt}{space 1}1.Country_Dummy3 {c |}{col 19}{res}{space 2} 1.455129{col 31}{space 2} .4122324{col 42}{space 1}    3.53{col 51}{space 3}0.002{col 59}{space 4} .5952277{col 72}{space 3} 2.315031
+{txt}{space 1}1.Country_Dummy4 {c |}{col 19}{res}{space 2} .8509504{col 31}{space 2} .2708041{col 42}{space 1}    3.14{col 51}{space 3}0.005{col 59}{space 4} .2860629{col 72}{space 3} 1.415838
+{txt}{space 1}1.Country_Dummy5 {c |}{col 19}{res}{space 2} 1.310168{col 31}{space 2} .6005688{col 42}{space 1}    2.18{col 51}{space 3}0.041{col 59}{space 4} .0574036{col 72}{space 3} 2.562933
+{txt}{space 1}1.Country_Dummy6 {c |}{col 19}{res}{space 2} 5.293103{col 31}{space 2} .4242387{col 42}{space 1}   12.48{col 51}{space 3}0.000{col 59}{space 4} 4.408157{col 72}{space 3} 6.178049
+{txt}{space 1}1.Country_Dummy7 {c |}{col 19}{res}{space 2} -.109594{col 31}{space 2} .5042556{col 42}{space 1}   -0.22{col 51}{space 3}0.830{col 59}{space 4}-1.161453{col 72}{space 3} .9422647
+{txt}{space 1}1.Country_Dummy8 {c |}{col 19}{res}{space 2} .9033573{col 31}{space 2} .9599104{col 42}{space 1}    0.94{col 51}{space 3}0.358{col 59}{space 4}-1.098981{col 72}{space 3} 2.905695
+{txt}{space 1}1.Country_Dummy9 {c |}{col 19}{res}{space 2}-.3408139{col 31}{space 2}  .307227{col 42}{space 1}   -1.11{col 51}{space 3}0.280{col 59}{space 4}-.9816782{col 72}{space 3} .3000504
+{txt}1.Country_Dummy10 {c |}{col 19}{res}{space 2} 9.445945{col 31}{space 2} 1.407397{col 42}{space 1}    6.71{col 51}{space 3}0.000{col 59}{space 4} 6.510166{col 72}{space 3} 12.38172
+{txt}1.Country_Dummy11 {c |}{col 19}{res}{space 2} 2.161193{col 31}{space 2} .4024616{col 42}{space 1}    5.37{col 51}{space 3}0.000{col 59}{space 4} 1.321673{col 72}{space 3} 3.000714
+{txt}1.Country_Dummy12 {c |}{col 19}{res}{space 2} 3.077744{col 31}{space 2} .4316924{col 42}{space 1}    7.13{col 51}{space 3}0.000{col 59}{space 4}  2.17725{col 72}{space 3} 3.978239
+{txt}1.Country_Dummy13 {c |}{col 19}{res}{space 2}-.4314666{col 31}{space 2} .2559205{col 42}{space 1}   -1.69{col 51}{space 3}0.107{col 59}{space 4}-.9653075{col 72}{space 3} .1023743
+{txt}1.Country_Dummy14 {c |}{col 19}{res}{space 2} 9.084248{col 31}{space 2} 2.115579{col 42}{space 1}    4.29{col 51}{space 3}0.000{col 59}{space 4} 4.671226{col 72}{space 3} 13.49727
+{txt}1.Country_Dummy15 {c |}{col 19}{res}{space 2}  1.04774{col 31}{space 2} .3685584{col 42}{space 1}    2.84{col 51}{space 3}0.010{col 59}{space 4} .2789409{col 72}{space 3} 1.816539
+{txt}1.Country_Dummy16 {c |}{col 19}{res}{space 2} 2.418855{col 31}{space 2} .5224716{col 42}{space 1}    4.63{col 51}{space 3}0.000{col 59}{space 4} 1.328999{col 72}{space 3} 3.508712
+{txt}1.Country_Dummy17 {c |}{col 19}{res}{space 2} 3.183088{col 31}{space 2} .6556252{col 42}{space 1}    4.86{col 51}{space 3}0.000{col 59}{space 4} 1.815478{col 72}{space 3} 4.550698
+{txt}1.Country_Dummy18 {c |}{col 19}{res}{space 2}-1.731896{col 31}{space 2} .5417854{col 42}{space 1}   -3.20{col 51}{space 3}0.005{col 59}{space 4} -2.86204{col 72}{space 3}-.6017511
+{txt}1.Country_Dummy19 {c |}{col 19}{res}{space 2}-2.088356{col 31}{space 2} .6535433{col 42}{space 1}   -3.20{col 51}{space 3}0.005{col 59}{space 4}-3.451623{col 72}{space 3}-.7250882
+{txt}1.Country_Dummy20 {c |}{col 19}{res}{space 2} 3.863713{col 31}{space 2} .8590938{col 42}{space 1}    4.50{col 51}{space 3}0.000{col 59}{space 4} 2.071674{col 72}{space 3} 5.655751
+{txt}1.Country_Dummy21 {c |}{col 19}{res}{space 2}-2.041035{col 31}{space 2} 1.122948{col 42}{space 1}   -1.82{col 51}{space 3}0.084{col 59}{space 4}-4.383463{col 72}{space 3} .3013937
+{txt}1.Country_Dummy22 {c |}{col 19}{res}{space 2}-2.165567{col 31}{space 2} .3249709{col 42}{space 1}   -6.66{col 51}{space 3}0.000{col 59}{space 4}-2.843444{col 72}{space 3}-1.487689
+{txt}1.Country_Dummy23 {c |}{col 19}{res}{space 2}-.2794477{col 31}{space 2} .4971921{col 42}{space 1}   -0.56{col 51}{space 3}0.580{col 59}{space 4}-1.316572{col 72}{space 3} .7576767
+{txt}1.Country_Dummy24 {c |}{col 19}{res}{space 2}-2.563272{col 31}{space 2} .5374857{col 42}{space 1}   -4.77{col 51}{space 3}0.000{col 59}{space 4}-3.684448{col 72}{space 3}-1.442097
+{txt}1.Country_Dummy25 {c |}{col 19}{res}{space 2}-1.838251{col 31}{space 2} .8556881{col 42}{space 1}   -2.15{col 51}{space 3}0.044{col 59}{space 4}-3.623185{col 72}{space 3}-.0533164
+{txt}1.Country_Dummy26 {c |}{col 19}{res}{space 2} 4.484289{col 31}{space 2} 1.168477{col 42}{space 1}    3.84{col 51}{space 3}0.001{col 59}{space 4} 2.046889{col 72}{space 3} 6.921689
+{txt}1.Country_Dummy27 {c |}{col 19}{res}{space 2} 3.383728{col 31}{space 2} 1.261046{col 42}{space 1}    2.68{col 51}{space 3}0.014{col 59}{space 4}  .753233{col 72}{space 3} 6.014223
+{txt}1.Country_Dummy28 {c |}{col 19}{res}{space 2} 6.911171{col 31}{space 2} .9202517{col 42}{space 1}    7.51{col 51}{space 3}0.000{col 59}{space 4}  4.99156{col 72}{space 3} 8.830783
+{txt}1.Country_Dummy29 {c |}{col 19}{res}{space 2} .6162287{col 31}{space 2} .4882443{col 42}{space 1}    1.26{col 51}{space 3}0.221{col 59}{space 4}-.4022311{col 72}{space 3} 1.634689
+{txt}1.Country_Dummy30 {c |}{col 19}{res}{space 2} 1.322056{col 31}{space 2} .3164045{col 42}{space 1}    4.18{col 51}{space 3}0.000{col 59}{space 4} .6620473{col 72}{space 3} 1.982064
+{txt}1.Country_Dummy31 {c |}{col 19}{res}{space 2} 3.753358{col 31}{space 2} .7111039{col 42}{space 1}    5.28{col 51}{space 3}0.000{col 59}{space 4} 2.270021{col 72}{space 3} 5.236694
+{txt}1.Country_Dummy32 {c |}{col 19}{res}{space 2}        0{col 31}{txt}  (omitted)
+{space 4}1.Year_Dummy1 {c |}{col 19}{res}{space 2} .4292006{col 31}{space 2} .1857679{col 42}{space 1}    2.31{col 51}{space 3}0.032{col 59}{space 4} .0416956{col 72}{space 3} .8167056
+{txt}{space 4}1.Year_Dummy2 {c |}{col 19}{res}{space 2} .2263596{col 31}{space 2} .1976176{col 42}{space 1}    1.15{col 51}{space 3}0.266{col 59}{space 4}-.1858635{col 72}{space 3} .6385826
+{txt}{space 4}1.Year_Dummy3 {c |}{col 19}{res}{space 2} .4056501{col 31}{space 2} .1901133{col 42}{space 1}    2.13{col 51}{space 3}0.045{col 59}{space 4} .0090808{col 72}{space 3} .8022195
+{txt}{space 4}1.Year_Dummy4 {c |}{col 19}{res}{space 2} .5731607{col 31}{space 2} .1658963{col 42}{space 1}    3.45{col 51}{space 3}0.003{col 59}{space 4} .2271071{col 72}{space 3} .9192143
+{txt}{space 4}1.Year_Dummy5 {c |}{col 19}{res}{space 2} .6367951{col 31}{space 2} .1782481{col 42}{space 1}    3.57{col 51}{space 3}0.002{col 59}{space 4}  .264976{col 72}{space 3} 1.008614
+{txt}{space 4}1.Year_Dummy6 {c |}{col 19}{res}{space 2} .2513982{col 31}{space 2} .1899451{col 42}{space 1}    1.32{col 51}{space 3}0.201{col 59}{space 4}-.1448203{col 72}{space 3} .6476167
+{txt}{space 4}1.Year_Dummy7 {c |}{col 19}{res}{space 2}-.4241409{col 31}{space 2} .1705683{col 42}{space 1}   -2.49{col 51}{space 3}0.022{col 59}{space 4}-.7799401{col 72}{space 3}-.0683416
+{txt}{space 4}1.Year_Dummy8 {c |}{col 19}{res}{space 2}-1.096148{col 31}{space 2} .1644869{col 42}{space 1}   -6.66{col 51}{space 3}0.000{col 59}{space 4}-1.439261{col 72}{space 3}-.7530338
+{txt}{space 4}1.Year_Dummy9 {c |}{col 19}{res}{space 2}-1.035997{col 31}{space 2} .1545195{col 42}{space 1}   -6.70{col 51}{space 3}0.000{col 59}{space 4}-1.358319{col 72}{space 3}-.7136747
+{txt}{space 3}1.Year_Dummy10 {c |}{col 19}{res}{space 2} 1.021589{col 31}{space 2} .1668097{col 42}{space 1}    6.12{col 51}{space 3}0.000{col 59}{space 4} .6736296{col 72}{space 3} 1.369547
+{txt}{space 3}1.Year_Dummy11 {c |}{col 19}{res}{space 2} 1.651621{col 31}{space 2} .1264803{col 42}{space 1}   13.06{col 51}{space 3}0.000{col 59}{space 4} 1.387788{col 72}{space 3} 1.915454
+{txt}{space 3}1.Year_Dummy12 {c |}{col 19}{res}{space 2} 1.492234{col 31}{space 2} .1291999{col 42}{space 1}   11.55{col 51}{space 3}0.000{col 59}{space 4} 1.222728{col 72}{space 3} 1.761741
+{txt}{space 3}1.Year_Dummy13 {c |}{col 19}{res}{space 2} 1.955621{col 31}{space 2} .0956845{col 42}{space 1}   20.44{col 51}{space 3}0.000{col 59}{space 4} 1.756027{col 72}{space 3} 2.155215
+{txt}{space 3}1.Year_Dummy14 {c |}{col 19}{res}{space 2} 2.154823{col 31}{space 2} .0794425{col 42}{space 1}   27.12{col 51}{space 3}0.000{col 59}{space 4} 1.989109{col 72}{space 3} 2.320537
+{txt}{space 3}1.Year_Dummy15 {c |}{col 19}{res}{space 2} 1.663934{col 31}{space 2}  .079105{col 42}{space 1}   21.03{col 51}{space 3}0.000{col 59}{space 4} 1.498924{col 72}{space 3} 1.828944
+{txt}{space 3}1.Year_Dummy16 {c |}{col 19}{res}{space 2} 1.101201{col 31}{space 2} .0770154{col 42}{space 1}   14.30{col 51}{space 3}0.000{col 59}{space 4} .9405495{col 72}{space 3} 1.261852
+{txt}{space 3}1.Year_Dummy17 {c |}{col 19}{res}{space 2} .4905996{col 31}{space 2} .0901731{col 42}{space 1}    5.44{col 51}{space 3}0.000{col 59}{space 4} .3025018{col 72}{space 3} .6786974
+{txt}{space 3}1.Year_Dummy18 {c |}{col 19}{res}{space 2} -.224681{col 31}{space 2} .0648401{col 42}{space 1}   -3.47{col 51}{space 3}0.002{col 59}{space 4}-.3599351{col 72}{space 3} -.089427
+{txt}{space 3}1.Year_Dummy19 {c |}{col 19}{res}{space 2}-.9136619{col 31}{space 2} .0612614{col 42}{space 1}  -14.91{col 51}{space 3}0.000{col 59}{space 4}-1.041451{col 72}{space 3} -.785873
+{txt}{space 3}1.Year_Dummy20 {c |}{col 19}{res}{space 2}-1.131392{col 31}{space 2} .0425174{col 42}{space 1}  -26.61{col 51}{space 3}0.000{col 59}{space 4}-1.220082{col 72}{space 3}-1.042703
+{txt}{space 3}1.Year_Dummy21 {c |}{col 19}{res}{space 2}        0{col 31}{txt}  (omitted)
+{space 12}_cons {c |}{col 19}{res}{space 2} 6.921508{col 31}{space 2} 1.581643{col 42}{space 1}    4.38{col 51}{space 3}0.000{col 59}{space 4} 3.622258{col 72}{space 3} 10.22076
+{txt}{hline 18}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. quietly estadd local fixedY "Yes", replace
+{txt}
+{com}. quietly estadd local fixedC "Yes", replace
+{txt}
+{com}. quietly estadd local clusY "Yes", replace
+{txt}
+{com}. estadd scalar adj_r2 = e(r2) , replace
+
+{txt}added scalar:
+             e(adj_r2) =  {res}.65075325
+{txt}
+{com}. 
+. 
+. esttab regr1 regr2 regr3 regr4 regr5 using "ECO375Phase6_TABLE3.rtf", replace label se star(* 0.10 ** 0.05 *** 0.01) s(fixedY fixedC clusY adj_r2 N, label("Year FE""Country FE""Clustered SEs (Year)""Adjusted R^2""Observations")) keep(AU _cons) 
+{res}{txt}(output written to {browse  `"ECO375Phase6_TABLE3.rtf"'})
+
+{com}. 
+. 
+. eststo regr6 : reg UER AU GDP I RD LIT LFPR, robust    
+
+{txt}Linear regression                               Number of obs     = {res}       672
+                                                {txt}F(6, 665)         =  {res}    23.80
+                                                {txt}Prob > F          = {res}    0.0000
+                                                {txt}R-squared         = {res}    0.1905
+                                                {txt}Root MSE          =    {res} 3.7239
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}         UER{col 14}{c |} Coefficient{col 26}  std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 10}AU {c |}{col 14}{res}{space 2}-.0315603{col 26}{space 2} .0161113{col 37}{space 1}   -1.96{col 46}{space 3}0.051{col 54}{space 4}-.0631954{col 67}{space 3} .0000748
+{txt}{space 9}GDP {c |}{col 14}{res}{space 2}-.2179443{col 26}{space 2} .0541462{col 37}{space 1}   -4.03{col 46}{space 3}0.000{col 54}{space 4}-.3242625{col 67}{space 3}-.1116261
+{txt}{space 11}I {c |}{col 14}{res}{space 2}-.1251744{col 26}{space 2} .0432315{col 37}{space 1}   -2.90{col 46}{space 3}0.004{col 54}{space 4} -.210061{col 67}{space 3}-.0402877
+{txt}{space 10}RD {c |}{col 14}{res}{space 2}-1.279803{col 26}{space 2} .2171691{col 37}{space 1}   -5.89{col 46}{space 3}0.000{col 54}{space 4}-1.706222{col 67}{space 3}-.8533831
+{txt}{space 9}LIT {c |}{col 14}{res}{space 2} .0477214{col 26}{space 2} .0424554{col 37}{space 1}    1.12{col 46}{space 3}0.261{col 54}{space 4}-.0356413{col 67}{space 3} .1310842
+{txt}{space 8}LFPR {c |}{col 14}{res}{space 2}-.1216674{col 26}{space 2} .0260795{col 37}{space 1}   -4.67{col 46}{space 3}0.000{col 54}{space 4}-.1728754{col 67}{space 3}-.0704594
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 15.97846{col 26}{space 2} 4.057512{col 37}{space 1}    3.94{col 46}{space 3}0.000{col 54}{space 4} 8.011378{col 67}{space 3} 23.94553
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. quietly estadd local fixedY "No", replace
+{txt}
+{com}. quietly estadd local fixedC "No", replace
+{txt}
+{com}. quietly estadd local clusY "No", replace
+{txt}
+{com}. estadd scalar adj_r2 = e(r2) , replace
+
+{txt}added scalar:
+             e(adj_r2) =  {res}.19045944
+{txt}
+{com}. 
+. 
+. eststo regr7 : reg UER AU GDP I RD LIT LFPR i.Year_Dummy* i.Country_Dummy*, cluster(Year)
+{txt}{p 0 6 2}note: {bf:1.Year_Dummy21} omitted because of collinearity.{p_end}
+{p 0 6 2}note: {bf:1.Country_Dummy32} omitted because of collinearity.{p_end}
+
+Linear regression                               Number of obs     = {res}       672
+                                                {txt}{help j_robustsingular:F(19, 20) }        =  {res}        .
+                                                {txt}Prob > F          = {res}         .
+                                                {txt}R-squared         = {res}    0.6829
+                                                {txt}Root MSE          =    {res} 2.4257
+
+{txt}{ralign 83:(Std. err. adjusted for {res:21} clusters in {res:Year})}
+{hline 18}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 19}{c |}{col 31}    Robust
+{col 1}              UER{col 19}{c |} Coefficient{col 31}  std. err.{col 43}      t{col 51}   P>|t|{col 59}     [95% con{col 72}f. interval]
+{hline 18}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 15}AU {c |}{col 19}{res}{space 2}-.0421437{col 31}{space 2} .0302558{col 42}{space 1}   -1.39{col 51}{space 3}0.179{col 59}{space 4}-.1052563{col 72}{space 3} .0209689
+{txt}{space 14}GDP {c |}{col 19}{res}{space 2}-.2931277{col 31}{space 2} .0922709{col 42}{space 1}   -3.18{col 51}{space 3}0.005{col 59}{space 4}-.4856014{col 72}{space 3} -.100654
+{txt}{space 16}I {c |}{col 19}{res}{space 2}-.1030776{col 31}{space 2} .0226893{col 42}{space 1}   -4.54{col 51}{space 3}0.000{col 59}{space 4}-.1504067{col 72}{space 3}-.0557485
+{txt}{space 15}RD {c |}{col 19}{res}{space 2} -.095132{col 31}{space 2} .2875511{col 42}{space 1}   -0.33{col 51}{space 3}0.744{col 59}{space 4} -.694953{col 72}{space 3}  .504689
+{txt}{space 14}LIT {c |}{col 19}{res}{space 2} .1078526{col 31}{space 2}  .060701{col 42}{space 1}    1.78{col 51}{space 3}0.091{col 59}{space 4}-.0187674{col 72}{space 3} .2344726
+{txt}{space 13}LFPR {c |}{col 19}{res}{space 2}-.1995284{col 31}{space 2} .0799127{col 42}{space 1}   -2.50{col 51}{space 3}0.021{col 59}{space 4}-.3662235{col 72}{space 3}-.0328334
+{txt}{space 4}1.Year_Dummy1 {c |}{col 19}{res}{space 2} 2.578721{col 31}{space 2} .9380177{col 42}{space 1}    2.75{col 51}{space 3}0.012{col 59}{space 4} .6220505{col 72}{space 3} 4.535392
+{txt}{space 4}1.Year_Dummy2 {c |}{col 19}{res}{space 2} 1.715974{col 31}{space 2} .7361199{col 42}{space 1}    2.33{col 51}{space 3}0.030{col 59}{space 4} .1804547{col 72}{space 3} 3.251493
+{txt}{space 4}1.Year_Dummy3 {c |}{col 19}{res}{space 2} 1.948991{col 31}{space 2} .7552669{col 42}{space 1}    2.58{col 51}{space 3}0.018{col 59}{space 4} .3735321{col 72}{space 3}  3.52445
+{txt}{space 4}1.Year_Dummy4 {c |}{col 19}{res}{space 2} 2.097932{col 31}{space 2} .7568084{col 42}{space 1}    2.77{col 51}{space 3}0.012{col 59}{space 4} .5192579{col 72}{space 3} 3.676607
+{txt}{space 4}1.Year_Dummy5 {c |}{col 19}{res}{space 2} 2.505537{col 31}{space 2} .8720715{col 42}{space 1}    2.87{col 51}{space 3}0.009{col 59}{space 4} .6864276{col 72}{space 3} 4.324646
+{txt}{space 4}1.Year_Dummy6 {c |}{col 19}{res}{space 2} 1.985856{col 31}{space 2}  .789841{col 42}{space 1}    2.51{col 51}{space 3}0.021{col 59}{space 4} .3382763{col 72}{space 3} 3.633435
+{txt}{space 4}1.Year_Dummy7 {c |}{col 19}{res}{space 2} 1.638591{col 31}{space 2} .8559841{col 42}{space 1}    1.91{col 51}{space 3}0.070{col 59}{space 4}-.1469601{col 72}{space 3} 3.424143
+{txt}{space 4}1.Year_Dummy8 {c |}{col 19}{res}{space 2} 1.004751{col 31}{space 2} .8421946{col 42}{space 1}    1.19{col 51}{space 3}0.247{col 59}{space 4}-.7520365{col 72}{space 3} 2.761538
+{txt}{space 4}1.Year_Dummy9 {c |}{col 19}{res}{space 2} .3474199{col 31}{space 2} .5547688{col 42}{space 1}    0.63{col 51}{space 3}0.538{col 59}{space 4}-.8098076{col 72}{space 3} 1.504647
+{txt}{space 3}1.Year_Dummy10 {c |}{col 19}{res}{space 2} .6483231{col 31}{space 2} .1611442{col 42}{space 1}    4.02{col 51}{space 3}0.001{col 59}{space 4} .3121823{col 72}{space 3}  .984464
+{txt}{space 3}1.Year_Dummy11 {c |}{col 19}{res}{space 2} 3.327393{col 31}{space 2} .7003998{col 42}{space 1}    4.75{col 51}{space 3}0.000{col 59}{space 4} 1.866385{col 72}{space 3} 4.788401
+{txt}{space 3}1.Year_Dummy12 {c |}{col 19}{res}{space 2}  3.09032{col 31}{space 2} .6453261{col 42}{space 1}    4.79{col 51}{space 3}0.000{col 59}{space 4} 1.744194{col 72}{space 3} 4.436447
+{txt}{space 3}1.Year_Dummy13 {c |}{col 19}{res}{space 2} 3.312607{col 31}{space 2} .4634032{col 42}{space 1}    7.15{col 51}{space 3}0.000{col 59}{space 4} 2.345965{col 72}{space 3}  4.27925
+{txt}{space 3}1.Year_Dummy14 {c |}{col 19}{res}{space 2} 3.479971{col 31}{space 2} .5360126{col 42}{space 1}    6.49{col 51}{space 3}0.000{col 59}{space 4} 2.361868{col 72}{space 3} 4.598073
+{txt}{space 3}1.Year_Dummy15 {c |}{col 19}{res}{space 2} 3.360975{col 31}{space 2} .6256616{col 42}{space 1}    5.37{col 51}{space 3}0.000{col 59}{space 4} 2.055867{col 72}{space 3} 4.666082
+{txt}{space 3}1.Year_Dummy16 {c |}{col 19}{res}{space 2} 3.040558{col 31}{space 2} .6836905{col 42}{space 1}    4.45{col 51}{space 3}0.000{col 59}{space 4} 1.614404{col 72}{space 3} 4.466711
+{txt}{space 3}1.Year_Dummy17 {c |}{col 19}{res}{space 2} 2.243939{col 31}{space 2} .5782772{col 42}{space 1}    3.88{col 51}{space 3}0.001{col 59}{space 4} 1.037674{col 72}{space 3} 3.450204
+{txt}{space 3}1.Year_Dummy18 {c |}{col 19}{res}{space 2} 2.002433{col 31}{space 2} .6471759{col 42}{space 1}    3.09{col 51}{space 3}0.006{col 59}{space 4} .6524475{col 72}{space 3} 3.352418
+{txt}{space 3}1.Year_Dummy19 {c |}{col 19}{res}{space 2} 1.306661{col 31}{space 2} .6066176{col 42}{space 1}    2.15{col 51}{space 3}0.044{col 59}{space 4} .0412789{col 72}{space 3} 2.572043
+{txt}{space 3}1.Year_Dummy20 {c |}{col 19}{res}{space 2} .9549918{col 31}{space 2} .5405632{col 42}{space 1}    1.77{col 51}{space 3}0.093{col 59}{space 4}-.1726034{col 72}{space 3} 2.082587
+{txt}{space 3}1.Year_Dummy21 {c |}{col 19}{res}{space 2}        0{col 31}{txt}  (omitted)
+{space 1}1.Country_Dummy1 {c |}{col 19}{res}{space 2}-.5170354{col 31}{space 2} .7033472{col 42}{space 1}   -0.74{col 51}{space 3}0.471{col 59}{space 4}-1.984192{col 72}{space 3}  .950121
+{txt}{space 1}1.Country_Dummy2 {c |}{col 19}{res}{space 2}-.7101707{col 31}{space 2} .6166632{col 42}{space 1}   -1.15{col 51}{space 3}0.263{col 59}{space 4}-1.996508{col 72}{space 3} .5761662
+{txt}{space 1}1.Country_Dummy3 {c |}{col 19}{res}{space 2}-.0120697{col 31}{space 2} .6213062{col 42}{space 1}   -0.02{col 51}{space 3}0.985{col 59}{space 4}-1.308092{col 72}{space 3} 1.283952
+{txt}{space 1}1.Country_Dummy4 {c |}{col 19}{res}{space 2} 1.620934{col 31}{space 2} .5317241{col 42}{space 1}    3.05{col 51}{space 3}0.006{col 59}{space 4} .5117769{col 72}{space 3} 2.730091
+{txt}{space 1}1.Country_Dummy5 {c |}{col 19}{res}{space 2}-.1584355{col 31}{space 2} .9105286{col 42}{space 1}   -0.17{col 51}{space 3}0.864{col 59}{space 4}-2.057765{col 72}{space 3} 1.740894
+{txt}{space 1}1.Country_Dummy6 {c |}{col 19}{res}{space 2} 5.536103{col 31}{space 2} .8106015{col 42}{space 1}    6.83{col 51}{space 3}0.000{col 59}{space 4} 3.845218{col 72}{space 3} 7.226989
+{txt}{space 1}1.Country_Dummy7 {c |}{col 19}{res}{space 2}-.2156022{col 31}{space 2} .6325469{col 42}{space 1}   -0.34{col 51}{space 3}0.737{col 59}{space 4}-1.535072{col 72}{space 3} 1.103868
+{txt}{space 1}1.Country_Dummy8 {c |}{col 19}{res}{space 2} 1.311175{col 31}{space 2} .6601441{col 42}{space 1}    1.99{col 51}{space 3}0.061{col 59}{space 4}-.0658616{col 72}{space 3} 2.688211
+{txt}{space 1}1.Country_Dummy9 {c |}{col 19}{res}{space 2} .4873536{col 31}{space 2} .6528398{col 42}{space 1}    0.75{col 51}{space 3}0.464{col 59}{space 4}-.8744463{col 72}{space 3} 1.849154
+{txt}1.Country_Dummy10 {c |}{col 19}{res}{space 2} 8.767358{col 31}{space 2} 1.466452{col 42}{space 1}    5.98{col 51}{space 3}0.000{col 59}{space 4} 5.708392{col 72}{space 3} 11.82632
+{txt}1.Country_Dummy11 {c |}{col 19}{res}{space 2} 2.326396{col 31}{space 2} .5680201{col 42}{space 1}    4.10{col 51}{space 3}0.001{col 59}{space 4} 1.141526{col 72}{space 3} 3.511265
+{txt}1.Country_Dummy12 {c |}{col 19}{res}{space 2} 2.248058{col 31}{space 2} .5273203{col 42}{space 1}    4.26{col 51}{space 3}0.000{col 59}{space 4} 1.148087{col 72}{space 3} 3.348028
+{txt}1.Country_Dummy13 {c |}{col 19}{res}{space 2}-.1375894{col 31}{space 2} .4689424{col 42}{space 1}   -0.29{col 51}{space 3}0.772{col 59}{space 4}-1.115786{col 72}{space 3} .8406074
+{txt}1.Country_Dummy14 {c |}{col 19}{res}{space 2}  6.94937{col 31}{space 2} 1.715739{col 42}{space 1}    4.05{col 51}{space 3}0.001{col 59}{space 4}   3.3704{col 72}{space 3} 10.52834
+{txt}1.Country_Dummy15 {c |}{col 19}{res}{space 2}-.4049805{col 31}{space 2} 1.118829{col 42}{space 1}   -0.36{col 51}{space 3}0.721{col 59}{space 4}-2.738817{col 72}{space 3} 1.928856
+{txt}1.Country_Dummy16 {c |}{col 19}{res}{space 2} 3.211829{col 31}{space 2} .9011067{col 42}{space 1}    3.56{col 51}{space 3}0.002{col 59}{space 4} 1.332153{col 72}{space 3} 5.091504
+{txt}1.Country_Dummy17 {c |}{col 19}{res}{space 2} .4258767{col 31}{space 2} 1.040812{col 42}{space 1}    0.41{col 51}{space 3}0.687{col 59}{space 4}-1.745219{col 72}{space 3} 2.596973
+{txt}1.Country_Dummy18 {c |}{col 19}{res}{space 2}-1.746064{col 31}{space 2} .4450592{col 42}{space 1}   -3.92{col 51}{space 3}0.001{col 59}{space 4}-2.674441{col 72}{space 3}-.8176868
+{txt}1.Country_Dummy19 {c |}{col 19}{res}{space 2}-2.379266{col 31}{space 2} .9400169{col 42}{space 1}   -2.53{col 51}{space 3}0.020{col 59}{space 4}-4.340107{col 72}{space 3}-.4184247
+{txt}1.Country_Dummy20 {c |}{col 19}{res}{space 2} 3.779538{col 31}{space 2} .9695384{col 42}{space 1}    3.90{col 51}{space 3}0.001{col 59}{space 4} 1.757117{col 72}{space 3}  5.80196
+{txt}1.Country_Dummy21 {c |}{col 19}{res}{space 2}-3.316239{col 31}{space 2} .8770542{col 42}{space 1}   -3.78{col 51}{space 3}0.001{col 59}{space 4}-5.145742{col 72}{space 3}-1.486736
+{txt}1.Country_Dummy22 {c |}{col 19}{res}{space 2}-3.617703{col 31}{space 2} 1.168548{col 42}{space 1}   -3.10{col 51}{space 3}0.006{col 59}{space 4}-6.055252{col 72}{space 3}-1.180154
+{txt}1.Country_Dummy23 {c |}{col 19}{res}{space 2} .3820642{col 31}{space 2} .7860794{col 42}{space 1}    0.49{col 51}{space 3}0.632{col 59}{space 4}-1.257669{col 72}{space 3} 2.021797
+{txt}1.Country_Dummy24 {c |}{col 19}{res}{space 2}-1.977686{col 31}{space 2}   .76911{col 42}{space 1}   -2.57{col 51}{space 3}0.018{col 59}{space 4}-3.582021{col 72}{space 3}-.3733505
+{txt}1.Country_Dummy25 {c |}{col 19}{res}{space 2}-1.065104{col 31}{space 2}  1.06603{col 42}{space 1}   -1.00{col 51}{space 3}0.330{col 59}{space 4}-3.288804{col 72}{space 3} 1.158595
+{txt}1.Country_Dummy26 {c |}{col 19}{res}{space 2} 3.379491{col 31}{space 2} 1.520721{col 42}{space 1}    2.22{col 51}{space 3}0.038{col 59}{space 4} .2073231{col 72}{space 3}  6.55166
+{txt}1.Country_Dummy27 {c |}{col 19}{res}{space 2} 3.244265{col 31}{space 2} 1.231563{col 42}{space 1}    2.63{col 51}{space 3}0.016{col 59}{space 4} .6752696{col 72}{space 3}  5.81326
+{txt}1.Country_Dummy28 {c |}{col 19}{res}{space 2} 6.700622{col 31}{space 2} 1.345818{col 42}{space 1}    4.98{col 51}{space 3}0.000{col 59}{space 4} 3.893295{col 72}{space 3} 9.507949
+{txt}1.Country_Dummy29 {c |}{col 19}{res}{space 2} .1332462{col 31}{space 2} .5370892{col 42}{space 1}    0.25{col 51}{space 3}0.807{col 59}{space 4}-.9871022{col 72}{space 3} 1.253595
+{txt}1.Country_Dummy30 {c |}{col 19}{res}{space 2}  2.77123{col 31}{space 2} .8626016{col 42}{space 1}    3.21{col 51}{space 3}0.004{col 59}{space 4} .9718746{col 72}{space 3} 4.570585
+{txt}1.Country_Dummy31 {c |}{col 19}{res}{space 2} 2.335915{col 31}{space 2} 1.767448{col 42}{space 1}    1.32{col 51}{space 3}0.201{col 59}{space 4}-1.350916{col 72}{space 3} 6.022746
+{txt}1.Country_Dummy32 {c |}{col 19}{res}{space 2}        0{col 31}{txt}  (omitted)
+{space 12}_cons {c |}{col 19}{res}{space 2} 10.88436{col 31}{space 2} 7.702015{col 42}{space 1}    1.41{col 51}{space 3}0.173{col 59}{space 4} -5.18176{col 72}{space 3} 26.95048
+{txt}{hline 18}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. quietly estadd local fixedY "Yes", replace
+{txt}
+{com}. quietly estadd local fixedC "Yes", replace
+{txt}
+{com}. quietly estadd local clusY "Yes", replace
+{txt}
+{com}. estadd scalar adj_r2 = e(r2) , replace
+
+{txt}added scalar:
+             e(adj_r2) =  {res}.68285285
+{txt}
+{com}. 
+. gen inter = AU*Developed
+{txt}
+{com}. 
+. eststo regr8 : reg UER AU GDP I RD LIT LFPR inter i.Year_Dummy* i.Country_Dummy*, cluster(Year)
+{txt}{p 0 6 2}note: {bf:1.Year_Dummy21} omitted because of collinearity.{p_end}
+{p 0 6 2}note: {bf:1.Country_Dummy32} omitted because of collinearity.{p_end}
+
+Linear regression                               Number of obs     = {res}       672
+                                                {txt}{help j_robustsingular:F(19, 20) }        =  {res}        .
+                                                {txt}Prob > F          = {res}         .
+                                                {txt}R-squared         = {res}    0.7113
+                                                {txt}Root MSE          =    {res} 2.3163
+
+{txt}{ralign 83:(Std. err. adjusted for {res:21} clusters in {res:Year})}
+{hline 18}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 19}{c |}{col 31}    Robust
+{col 1}              UER{col 19}{c |} Coefficient{col 31}  std. err.{col 43}      t{col 51}   P>|t|{col 59}     [95% con{col 72}f. interval]
+{hline 18}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 15}AU {c |}{col 19}{res}{space 2} .0672032{col 31}{space 2} .0291422{col 42}{space 1}    2.31{col 51}{space 3}0.032{col 59}{space 4} .0064137{col 72}{space 3} .1279927
+{txt}{space 14}GDP {c |}{col 19}{res}{space 2}-.3117053{col 31}{space 2} .0912233{col 42}{space 1}   -3.42{col 51}{space 3}0.003{col 59}{space 4}-.5019939{col 72}{space 3}-.1214168
+{txt}{space 16}I {c |}{col 19}{res}{space 2}-.1068418{col 31}{space 2} .0266306{col 42}{space 1}   -4.01{col 51}{space 3}0.001{col 59}{space 4}-.1623924{col 72}{space 3}-.0512913
+{txt}{space 15}RD {c |}{col 19}{res}{space 2} .0725743{col 31}{space 2} .3108141{col 42}{space 1}    0.23{col 51}{space 3}0.818{col 59}{space 4}-.5757726{col 72}{space 3} .7209212
+{txt}{space 14}LIT {c |}{col 19}{res}{space 2}  .066925{col 31}{space 2} .0475397{col 42}{space 1}    1.41{col 51}{space 3}0.175{col 59}{space 4} -.032241{col 72}{space 3}  .166091
+{txt}{space 13}LFPR {c |}{col 19}{res}{space 2}-.0955602{col 31}{space 2}  .075196{col 42}{space 1}   -1.27{col 51}{space 3}0.218{col 59}{space 4}-.2524163{col 72}{space 3}  .061296
+{txt}{space 12}inter {c |}{col 19}{res}{space 2}-.1002839{col 31}{space 2} .0167646{col 42}{space 1}   -5.98{col 51}{space 3}0.000{col 59}{space 4}-.1352542{col 72}{space 3}-.0653136
+{txt}{space 4}1.Year_Dummy1 {c |}{col 19}{res}{space 2} 2.537631{col 31}{space 2} .9132713{col 42}{space 1}    2.78{col 51}{space 3}0.012{col 59}{space 4} .6325807{col 72}{space 3} 4.442682
+{txt}{space 4}1.Year_Dummy2 {c |}{col 19}{res}{space 2} 1.779887{col 31}{space 2}  .710789{col 42}{space 1}    2.50{col 51}{space 3}0.021{col 59}{space 4} .2972068{col 72}{space 3} 3.262567
+{txt}{space 4}1.Year_Dummy3 {c |}{col 19}{res}{space 2} 1.981513{col 31}{space 2} .7357347{col 42}{space 1}    2.69{col 51}{space 3}0.014{col 59}{space 4} .4467977{col 72}{space 3} 3.516229
+{txt}{space 4}1.Year_Dummy4 {c |}{col 19}{res}{space 2} 2.040466{col 31}{space 2} .7388071{col 42}{space 1}    2.76{col 51}{space 3}0.012{col 59}{space 4} .4993409{col 72}{space 3}  3.58159
+{txt}{space 4}1.Year_Dummy5 {c |}{col 19}{res}{space 2} 2.490272{col 31}{space 2} .8570973{col 42}{space 1}    2.91{col 51}{space 3}0.009{col 59}{space 4} .7023986{col 72}{space 3} 4.278146
+{txt}{space 4}1.Year_Dummy6 {c |}{col 19}{res}{space 2} 1.983555{col 31}{space 2} .7802244{col 42}{space 1}    2.54{col 51}{space 3}0.019{col 59}{space 4} .3560356{col 72}{space 3} 3.611075
+{txt}{space 4}1.Year_Dummy7 {c |}{col 19}{res}{space 2} 1.717188{col 31}{space 2} .8460666{col 42}{space 1}    2.03{col 51}{space 3}0.056{col 59}{space 4}-.0476759{col 72}{space 3} 3.482052
+{txt}{space 4}1.Year_Dummy8 {c |}{col 19}{res}{space 2}  1.36357{col 31}{space 2} .8335577{col 42}{space 1}    1.64{col 51}{space 3}0.118{col 59}{space 4}-.3752007{col 72}{space 3} 3.102341
+{txt}{space 4}1.Year_Dummy9 {c |}{col 19}{res}{space 2} .5714386{col 31}{space 2} .5437366{col 42}{space 1}    1.05{col 51}{space 3}0.306{col 59}{space 4}-.5627762{col 72}{space 3} 1.705653
+{txt}{space 3}1.Year_Dummy10 {c |}{col 19}{res}{space 2} .8936081{col 31}{space 2} .1574034{col 42}{space 1}    5.68{col 51}{space 3}0.000{col 59}{space 4} .5652704{col 72}{space 3} 1.221946
+{txt}{space 3}1.Year_Dummy11 {c |}{col 19}{res}{space 2} 3.639687{col 31}{space 2}  .691656{col 42}{space 1}    5.26{col 51}{space 3}0.000{col 59}{space 4} 2.196918{col 72}{space 3} 5.082456
+{txt}{space 3}1.Year_Dummy12 {c |}{col 19}{res}{space 2}  3.40959{col 31}{space 2} .6350074{col 42}{space 1}    5.37{col 51}{space 3}0.000{col 59}{space 4} 2.084988{col 72}{space 3} 4.734192
+{txt}{space 3}1.Year_Dummy13 {c |}{col 19}{res}{space 2} 3.428462{col 31}{space 2} .4588609{col 42}{space 1}    7.47{col 51}{space 3}0.000{col 59}{space 4} 2.471294{col 72}{space 3} 4.385629
+{txt}{space 3}1.Year_Dummy14 {c |}{col 19}{res}{space 2} 3.626021{col 31}{space 2} .5299097{col 42}{space 1}    6.84{col 51}{space 3}0.000{col 59}{space 4} 2.520649{col 72}{space 3} 4.731393
+{txt}{space 3}1.Year_Dummy15 {c |}{col 19}{res}{space 2} 3.667834{col 31}{space 2} .6222936{col 42}{space 1}    5.89{col 51}{space 3}0.000{col 59}{space 4} 2.369752{col 72}{space 3} 4.965916
+{txt}{space 3}1.Year_Dummy16 {c |}{col 19}{res}{space 2} 3.321271{col 31}{space 2} .6825994{col 42}{space 1}    4.87{col 51}{space 3}0.000{col 59}{space 4} 1.897394{col 72}{space 3} 4.745149
+{txt}{space 3}1.Year_Dummy17 {c |}{col 19}{res}{space 2} 2.462044{col 31}{space 2} .5822074{col 42}{space 1}    4.23{col 51}{space 3}0.000{col 59}{space 4}  1.24758{col 72}{space 3} 3.676507
+{txt}{space 3}1.Year_Dummy18 {c |}{col 19}{res}{space 2} 2.173666{col 31}{space 2} .6509466{col 42}{space 1}    3.34{col 51}{space 3}0.003{col 59}{space 4} .8158147{col 72}{space 3} 3.531516
+{txt}{space 3}1.Year_Dummy19 {c |}{col 19}{res}{space 2} 1.417561{col 31}{space 2} .6124602{col 42}{space 1}    2.31{col 51}{space 3}0.031{col 59}{space 4} .1399917{col 72}{space 3} 2.695131
+{txt}{space 3}1.Year_Dummy20 {c |}{col 19}{res}{space 2} .9948073{col 31}{space 2} .5482013{col 42}{space 1}    1.81{col 51}{space 3}0.085{col 59}{space 4}-.1487206{col 72}{space 3} 2.138335
+{txt}{space 3}1.Year_Dummy21 {c |}{col 19}{res}{space 2}        0{col 31}{txt}  (omitted)
+{space 1}1.Country_Dummy1 {c |}{col 19}{res}{space 2}-.4899428{col 31}{space 2} .5283056{col 42}{space 1}   -0.93{col 51}{space 3}0.365{col 59}{space 4}-1.591969{col 72}{space 3} .6120833
+{txt}{space 1}1.Country_Dummy2 {c |}{col 19}{res}{space 2} -.839451{col 31}{space 2} .5182485{col 42}{space 1}   -1.62{col 51}{space 3}0.121{col 59}{space 4}-1.920498{col 72}{space 3} .2415964
+{txt}{space 1}1.Country_Dummy3 {c |}{col 19}{res}{space 2} .7242271{col 31}{space 2} .7295111{col 42}{space 1}    0.99{col 51}{space 3}0.333{col 59}{space 4}-.7975065{col 72}{space 3} 2.245961
+{txt}{space 1}1.Country_Dummy4 {c |}{col 19}{res}{space 2} 1.332496{col 31}{space 2} .4097801{col 42}{space 1}    3.25{col 51}{space 3}0.004{col 59}{space 4} .4777096{col 72}{space 3} 2.187282
+{txt}{space 1}1.Country_Dummy5 {c |}{col 19}{res}{space 2} .0844712{col 31}{space 2} .8767634{col 42}{space 1}    0.10{col 51}{space 3}0.924{col 59}{space 4}-1.744425{col 72}{space 3} 1.913367
+{txt}{space 1}1.Country_Dummy6 {c |}{col 19}{res}{space 2}   4.0648{col 31}{space 2} .9599884{col 42}{space 1}    4.23{col 51}{space 3}0.000{col 59}{space 4}   2.0623{col 72}{space 3} 6.067301
+{txt}{space 1}1.Country_Dummy7 {c |}{col 19}{res}{space 2}-1.028356{col 31}{space 2} .6255357{col 42}{space 1}   -1.64{col 51}{space 3}0.116{col 59}{space 4}-2.333201{col 72}{space 3} .2764883
+{txt}{space 1}1.Country_Dummy8 {c |}{col 19}{res}{space 2} .9108624{col 31}{space 2}  .715987{col 42}{space 1}    1.27{col 51}{space 3}0.218{col 59}{space 4}-.5826604{col 72}{space 3} 2.404385
+{txt}{space 1}1.Country_Dummy9 {c |}{col 19}{res}{space 2}-.0811131{col 31}{space 2} .5234591{col 42}{space 1}   -0.15{col 51}{space 3}0.878{col 59}{space 4} -1.17303{col 72}{space 3} 1.010803
+{txt}1.Country_Dummy10 {c |}{col 19}{res}{space 2} 9.235888{col 31}{space 2} 1.407964{col 42}{space 1}    6.56{col 51}{space 3}0.000{col 59}{space 4} 6.298926{col 72}{space 3} 12.17285
+{txt}1.Country_Dummy11 {c |}{col 19}{res}{space 2} 2.073442{col 31}{space 2} .4810483{col 42}{space 1}    4.31{col 51}{space 3}0.000{col 59}{space 4} 1.069993{col 72}{space 3} 3.076891
+{txt}1.Country_Dummy12 {c |}{col 19}{res}{space 2} 2.562685{col 31}{space 2} .6117337{col 42}{space 1}    4.19{col 51}{space 3}0.000{col 59}{space 4} 1.286631{col 72}{space 3} 3.838739
+{txt}1.Country_Dummy13 {c |}{col 19}{res}{space 2}-.2676322{col 31}{space 2} .4644511{col 42}{space 1}   -0.58{col 51}{space 3}0.571{col 59}{space 4} -1.23646{col 72}{space 3} .7011957
+{txt}1.Country_Dummy14 {c |}{col 19}{res}{space 2} 8.041833{col 31}{space 2} 1.821196{col 42}{space 1}    4.42{col 51}{space 3}0.000{col 59}{space 4} 4.242884{col 72}{space 3} 11.84078
+{txt}1.Country_Dummy15 {c |}{col 19}{res}{space 2}-1.467328{col 31}{space 2} 1.081903{col 42}{space 1}   -1.36{col 51}{space 3}0.190{col 59}{space 4}-3.724137{col 72}{space 3} .7894816
+{txt}1.Country_Dummy16 {c |}{col 19}{res}{space 2} 3.461259{col 31}{space 2} .9147972{col 42}{space 1}    3.78{col 51}{space 3}0.001{col 59}{space 4} 1.553025{col 72}{space 3} 5.369492
+{txt}1.Country_Dummy17 {c |}{col 19}{res}{space 2} 1.713904{col 31}{space 2} 1.273802{col 42}{space 1}    1.35{col 51}{space 3}0.194{col 59}{space 4}-.9431999{col 72}{space 3} 4.371007
+{txt}1.Country_Dummy18 {c |}{col 19}{res}{space 2}-2.133935{col 31}{space 2} .3756204{col 42}{space 1}   -5.68{col 51}{space 3}0.000{col 59}{space 4}-2.917465{col 72}{space 3}-1.350404
+{txt}1.Country_Dummy19 {c |}{col 19}{res}{space 2}-2.191989{col 31}{space 2} .8392067{col 42}{space 1}   -2.61{col 51}{space 3}0.017{col 59}{space 4}-3.942544{col 72}{space 3}-.4414346
+{txt}1.Country_Dummy20 {c |}{col 19}{res}{space 2} 3.388861{col 31}{space 2} 1.049768{col 42}{space 1}    3.23{col 51}{space 3}0.004{col 59}{space 4} 1.199083{col 72}{space 3} 5.578639
+{txt}1.Country_Dummy21 {c |}{col 19}{res}{space 2} -2.30628{col 31}{space 2} .7885565{col 42}{space 1}   -2.92{col 51}{space 3}0.008{col 59}{space 4} -3.95118{col 72}{space 3}-.6613802
+{txt}1.Country_Dummy22 {c |}{col 19}{res}{space 2}-6.494414{col 31}{space 2} 1.169095{col 42}{space 1}   -5.56{col 51}{space 3}0.000{col 59}{space 4}-8.933103{col 72}{space 3}-4.055725
+{txt}1.Country_Dummy23 {c |}{col 19}{res}{space 2} .0179048{col 31}{space 2} .6414836{col 42}{space 1}    0.03{col 51}{space 3}0.978{col 59}{space 4}-1.320206{col 72}{space 3} 1.356016
+{txt}1.Country_Dummy24 {c |}{col 19}{res}{space 2}  -2.2031{col 31}{space 2} .6030766{col 42}{space 1}   -3.65{col 51}{space 3}0.002{col 59}{space 4}-3.461096{col 72}{space 3}-.9451039
+{txt}1.Country_Dummy25 {c |}{col 19}{res}{space 2}-1.078515{col 31}{space 2} .8435991{col 42}{space 1}   -1.28{col 51}{space 3}0.216{col 59}{space 4}-2.838232{col 72}{space 3} .6812019
+{txt}1.Country_Dummy26 {c |}{col 19}{res}{space 2} 3.314146{col 31}{space 2} 1.469012{col 42}{space 1}    2.26{col 51}{space 3}0.035{col 59}{space 4} .2498406{col 72}{space 3} 6.378452
+{txt}1.Country_Dummy27 {c |}{col 19}{res}{space 2} 3.392683{col 31}{space 2} 1.051172{col 42}{space 1}    3.23{col 51}{space 3}0.004{col 59}{space 4} 1.199978{col 72}{space 3} 5.585389
+{txt}1.Country_Dummy28 {c |}{col 19}{res}{space 2} 6.208577{col 31}{space 2} 1.207459{col 42}{space 1}    5.14{col 51}{space 3}0.000{col 59}{space 4} 3.689861{col 72}{space 3} 8.727293
+{txt}1.Country_Dummy29 {c |}{col 19}{res}{space 2} .5935798{col 31}{space 2}  .653123{col 42}{space 1}    0.91{col 51}{space 3}0.374{col 59}{space 4}-.7688108{col 72}{space 3}  1.95597
+{txt}1.Country_Dummy30 {c |}{col 19}{res}{space 2} 1.937192{col 31}{space 2} .7137998{col 42}{space 1}    2.71{col 51}{space 3}0.013{col 59}{space 4} .4482315{col 72}{space 3} 3.426152
+{txt}1.Country_Dummy31 {c |}{col 19}{res}{space 2} 1.734228{col 31}{space 2} 1.643851{col 42}{space 1}    1.05{col 51}{space 3}0.304{col 59}{space 4}-1.694785{col 72}{space 3} 5.163241
+{txt}1.Country_Dummy32 {c |}{col 19}{res}{space 2}        0{col 31}{txt}  (omitted)
+{space 12}_cons {c |}{col 19}{res}{space 2} 6.350816{col 31}{space 2} 6.696481{col 42}{space 1}    0.95{col 51}{space 3}0.354{col 59}{space 4}-7.617798{col 72}{space 3} 20.31943
+{txt}{hline 18}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. quietly estadd local fixedY "Yes", replace
+{txt}
+{com}. quietly estadd local fixedC "Yes", replace
+{txt}
+{com}. quietly estadd local clusY "Yes", replace
+{txt}
+{com}. estadd scalar adj_r2 = e(r2) , replace
+
+{txt}added scalar:
+             e(adj_r2) =  {res}.71129091
+{txt}
+{com}. 
+. 
+. esttab regr6 regr7 regr8 using "ECO375Phase6_TABLE4.rtf", replace label se star(* 0.10 ** 0.05 *** 0.01) s(fixedY fixedC clusY adj_r2 N, label("Year FE""Country FE""Clustered SEs (Year)""Adjusted R^2""Observations")) keep(AU interact GDP I LIT LFPR _cons) 
+{res}{err}coefficient interact not found
+{txt}{search r(111), local:r(111);}
+
+end of do-file
+
+{search r(111), local:r(111);}
+
+{com}. do "/var/folders/mb/23yxtqns4zx0xzw_0pkrs7kh0000gn/T//SD52919.000000"
+{txt}
+{com}. esttab regr6 regr7 regr8 using "ECO375Phase6_TABLE4.rtf", replace label se star(* 0.10 ** 0.05 *** 0.01) s(fixedY fixedC clusY adj_r2 N, label("Year FE""Country FE""Clustered SEs (Year)""Adjusted R^2""Observations")) keep(AU inter GDP I LIT LFPR _cons) 
+{res}{txt}{p 0 4 2}
+(file {bf}
+ECO375Phase6_TABLE4.rtf{rm}
+not found)
+{p_end}
+{res}{txt}(output written to {browse  `"ECO375Phase6_TABLE4.rtf"'})
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/mb/23yxtqns4zx0xzw_0pkrs7kh0000gn/T//SD52919.000000"
+{txt}
+{com}. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/raimazaman/Desktop/ECO375 Phase 6/ECO375_Project_Phase6.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}29 Nov 2023, 03:44:03
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
